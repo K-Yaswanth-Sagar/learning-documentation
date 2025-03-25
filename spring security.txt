@@ -1,0 +1,61 @@
+SPRING SECURITY
+-> Spring Security is a framework that provides authentication, authorization, and protection against common security vulnerabilities in Java applications, particularly those built using Spring Boot.
+
+Key Features
+
+-> Authentication
+-> Authorization 
+-> CSRF Protection
+-> Session Management
+-> Password Encoding 
+-> Method-Level Security 
+
+Authentication Flow
+-> User sends credentials 
+-> Spring Security filters the request
+-> User details are fetched using UserDetailsService.
+-> Password is verified using PasswordEncoder.
+-> Authentication is granted or denied.
+-> If successful, a security context is created.
+
+Annotations
+-> @EnableWebSecurity – Enables Spring Security configuration.
+-> @EnableMethodSecurity – Enables method-level security.
+-> @PreAuthorize("hasRole('ADMIN')") – Restricts access to methods.
+-> @PostAuthorize("returnObject.owner == authentication.name") – Allows access only if the returned object belongs to the authenticated user.
+-> @Secured("ROLE_USER") – Defines access control at the method level.
+
+JWT
+-> JSON Web Token (JWT) is a compact, self-contained, and stateless authentication mechanism widely used in modern web applications, including Spring Boot. JWT provides a secure way to transmit user information between parties as a JSON object.
+-> Spring Security can integrate JWT to handle authentication and authorization in a stateless manner, making it ideal for REST APIs.
+-> JWT is an open standard (RFC 7519) used for securely transmitting information between parties as a JSON object. It is digitally signed to prevent tampering and can be verified without requiring database access.
+
+JWT Structure
+-> Header: Contains metadata about the token, such as the signing algorithm.
+-> Payload: Contains claims (user details, roles, expiration time, etc.).
+-> Signature: Ensures the token’s integrity and authenticity.
+
+JWT Works in Spring Security
+-> User logs in by providing credentials (username & password).
+-> Spring Security validates credentials using an authentication provider.
+-> JWT is generated and returned to the user.
+-> For subsequent requests, the client sends the JWT in the request header.
+-> Spring Security validates the token, extracts user details, and grants access.
+
+JWT Authentication Flow in Spring Boot
+1. User Authentication
+	-> The user submits credentials (username & password) via a login API.
+	-> Spring Security validates the credentials.
+	-> If valid, Spring generates a JWT and returns it to the client.
+
+2. Securing Endpoints
+	-> APIs require a valid JWT token in the Authorization header.
+	-> Requests without a valid token are rejected with 401 Unauthorized.
+
+3. Token Validation
+	-> The server verifies the JWT signature.
+	-> Extracts user details and assigns roles/permissions.
+
+4. Token Expiry & Refresh Tokens
+	-> JWT contains an expiration timestamp (exp).
+	-> When a token expires, a refresh token mechanism can be used to generate a new JWT without requiring the user to log in again.
